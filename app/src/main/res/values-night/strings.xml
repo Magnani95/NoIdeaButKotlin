@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_a_new_jorney">Start a new jorney</string>
+    <string name="welkome_homboard_capt">Welkome Homboard Capt!!</string>
+    <string name="load_the_load">Load the Load</string>
+    <string name="night_mode">Uh, It\'s dark outside.\nWhat\'s on the inside?</string>
+    <string name="exitButton">I really have no words for you foolishness.\nGet by on your own.</string>
+    <string name="exitButtonFinal">Find a F* Indian guy tutorial and then stuck this up
+                  \n***STACK OVERFLOW***</string>
+
+    <string name="shipName">AstroDildo 42 - towel mandatory</string>
+    <string name="ahead">Ahead</string>
+    <string name="back">Back</string>
+    <string name="_0">0%</string>
+
+</resources>

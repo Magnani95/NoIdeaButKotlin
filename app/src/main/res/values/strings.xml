@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">NoIdeaButKotlin</string>
+    <string name="start_a_new_jorney">Start a new jorney</string>
+    <string name="welkome_homboard_capt">Welkome Homboard Capt!!</string>
+    <string name="load_the_load">Load the Load</string>
+    <string name="night_mode">Uh, too much light.\nTry dark-mode.</string>
+    <string name="exitButton">Do you really wanna use an exit button to exit an APP on a PHONE!?</string>
+    <string name="exitButtonFinal">You should use gestures and bottom buttons.
+                  \nPlease, don\'t play anymore our(MY) game.</string>
+
+    <string name="shipName">The Commodore 63</string>
+    <string name="ahead">Ahead</string>
+    <string name="back">Back</string>
+    <string name="_0">0%</string>
+
+</resources>
