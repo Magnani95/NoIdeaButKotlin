@@ -8,9 +8,7 @@ import com.example.noideabutkotlin.generator.energyGenerator
 import com.example.noideabutkotlin.generator.engineGenerator
 import com.example.noideabutkotlin.generator.positionGenerator
 import com.example.noideabutkotlin.mandatory.*
-import java.io.Serializable
 import java.util.concurrent.ExecutorService
-import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 
 class Ship{
@@ -99,12 +97,26 @@ class Ship{
 		}
 	}
 	fun updateGraphic(activity: GameActivity){
-		var enginePercentage = engineModule.getThrustPercentage()
-		var bar = activity.findViewById<ProgressBar>(R.id.engineEfficiency)
-		var t = activity.findViewById<TextView>(R.id.enginePercentage)
+		val enginePercentage = engineModule.getThrustPercentage()
+		val engineBar = activity.findViewById<ProgressBar>(R.id.engineEfficiency)
+		val engineText = activity.findViewById<TextView>(R.id.enginePercentage)
+		val fuelProgress = activity.findViewById<ProgressBar>(R.id.fuelProgress)
+		val fuelText = activity.findViewById<TextView>(R.id.fuelPercentage)
 
-		t.text = enginePercentage.toString()
-		bar.progress = this.engineModule.getEfficiency(enginePercentage).toInt()
+		engineText.text = "${enginePercentage.toString()} %"
+		engineBar.progress = this.engineModule.getEfficiency(enginePercentage).toInt()
+		Log.d("MAGNANI", "updateGraphic: FUEL PERCENTAGE ${engineModule.getFuelPercentage()}")
+		fuelText.text = "${this.engineModule.getFuelPercentage().toString()} %"
+		fuelProgress.progress = this.engineModule.getFuelPercentage().toInt()
 
+		val sectorX = activity.findViewById<TextView>(R.id.SectorX)
+		val sectorY = activity.findViewById<TextView>(R.id.SectorY)
+		val coordX  = activity.findViewById<TextView>(R.id.CoordinatesX)
+		val coordY = activity.findViewById<TextView>(R.id.coordinatesY)
+
+		sectorY.text = "Y: ${this.position.sector.get('y')}"
+		sectorX.text = "X: ${this.position.sector.get('x')}"
+		coordY.text = "Y: ${this.position.coordinates.get('y')}"
+		coordX.text = "X: ${this.position.coordinates.get('x')}"
 	}
 }

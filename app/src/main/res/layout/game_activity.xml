@@ -14,17 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/engineDirection" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Switch
         android:id="@+id/engineDirection"
         android:layout_width="wrap_content"
@@ -63,22 +52,135 @@
     <ProgressBar
         android:id="@+id/engineEfficiency"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="71dp"
+        android:layout_width="81dp"
         android:layout_height="21dp"
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toStartOf="@+id/enginePercentage"
-        app:layout_constraintHorizontal_bias="0.608"
+        app:layout_constraintHorizontal_bias="0.62"
         app:layout_constraintStart_toEndOf="@+id/engineDirection"
         app:layout_constraintTop_toTopOf="@+id/enginePercentage" />
 
     <TextView
         android:id="@+id/enginePercentage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="42dp"
+        android:layout_height="22dp"
         android:layout_marginTop="36dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="72dp"
         android:text="@string/_0"
         app:layout_constraintEnd_toStartOf="@+id/engineMinus"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fuelPercentage"
+        android:layout_width="76dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/fuelProgress"
+        app:layout_constraintTop_toBottomOf="@+id/fuelMainText" />
+
+    <ProgressBar
+        android:id="@+id/fuelProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="80dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fuelMainText" />
+
+    <EditText
+        android:id="@+id/fuelMainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Fuel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/engineEfficiency" />
+
+    <EditText
+        android:id="@+id/Position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Position"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fuelMainText" />
+
+    <EditText
+        android:id="@+id/Velocity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Velocity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coordinatesY" />
+
+    <TextView
+        android:id="@+id/SectorX"
+        android:layout_width="186dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Position" />
+
+    <TextView
+        android:id="@+id/SectorY"
+        android:layout_width="186dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/SectorX"
+        app:layout_constraintTop_toBottomOf="@+id/Position" />
+
+    <TextView
+        android:id="@+id/CoordinatesX"
+        android:layout_width="372dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SectorX" />
+
+    <TextView
+        android:id="@+id/coordinatesY"
+        android:layout_width="372dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="20dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CoordinatesX" />
+
+    <TextView
+        android:id="@+id/velocityX"
+        android:layout_width="341dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="28dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Velocity" />
+
+    <TextView
+        android:id="@+id/velocityY"
+        android:layout_width="342dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="28dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/velocityX" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

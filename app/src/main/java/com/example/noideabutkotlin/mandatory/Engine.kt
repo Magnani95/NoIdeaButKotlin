@@ -84,6 +84,10 @@ class Engine (var fuelType : FuelType, var tank : Tank, var efficiencyManager: L
 
 	fun getEfficiency(i:UByte) : UByte = this.efficiencyManager.efficiency[i.toInt()]
 
+	fun getFuelPercentage():ULong{
+		return this.tank.percentage()
+	}
+
 	fun tick(ship:Ship) {
 		Log.d("MAGNANI", "tick: here 0 ")
 		if (this.operative){
@@ -216,6 +220,9 @@ class Tank (var max_capacity:ULong, var load: ULong){
 	}
 
 	fun isEmpty() : Boolean = this.load == 0uL
+
+	fun percentage() : ULong = this.load*100u/this.max_capacity
+
 
 	fun tick(consumption: UInt = 0u) {
 		var c = consumption

@@ -1,5 +1,6 @@
 package com.example.noideabutkotlin.generator
 
+import android.util.Log
 import com.example.noideabutkotlin.mandatory.Engine
 import com.example.noideabutkotlin.mandatory.FuelType
 import com.example.noideabutkotlin.mandatory.LoadManager
@@ -17,8 +18,8 @@ inline fun fuelTypeGenerator() : FuelType{
 }
 
 fun tankGenerator() : Tank {
-	val maxCapacity:ULong = Random.nextULong()
-	val load : ULong = (Random.nextULong()%50u) + maxCapacity/2u
+	val maxCapacity:ULong = 1000000u
+	val load : ULong = (Random.nextULong()%50u) + (maxCapacity/2u)
 	return Tank(maxCapacity, load)
 }
 

@@ -29,13 +29,10 @@ class GameActivity() : AppCompatActivity() {
 		setContentView(R.layout.game_activity)
 		var s: String? = intent.getStringExtra("code")
 
-		var b = findViewById<Button>(R.id.button)
 		var switch = findViewById<TextView>(R.id.engineDirection)
 		var enginePlus = findViewById<Button>(R.id.enginePlus)
 		var engineMinus = findViewById<Button>(R.id.engineMinus)
 
-
-		b.setOnClickListener(listener)
 		switch.setOnClickListener(listener)
 		enginePlus.setOnClickListener(listener)
 		engineMinus.setOnClickListener(listener)
@@ -92,7 +89,7 @@ class GameListener(var activity: GameActivity) : View.OnClickListener {
 				Log.d("MAG-value", "premuto altro " )
 			}
 		}
-
+		activity.ship.updateGraphic(activity)
 
 
 
