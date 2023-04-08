@@ -103,6 +103,7 @@ class Ship{
 		val fuelProgress = activity.findViewById<ProgressBar>(R.id.fuelProgress)
 		val fuelText = activity.findViewById<TextView>(R.id.fuelPercentage)
 
+
 		engineText.text = "${enginePercentage.toString()} %"
 		engineBar.progress = this.engineModule.getEfficiency(enginePercentage).toInt()
 		Log.d("MAGNANI", "updateGraphic: FUEL PERCENTAGE ${engineModule.getFuelPercentage()}")
@@ -118,5 +119,27 @@ class Ship{
 		sectorX.text = "X: ${this.position.sector.get('x')}"
 		coordY.text = "Y: ${this.position.coordinates.get('y')}"
 		coordX.text = "X: ${this.position.coordinates.get('x')}"
+
+		val velocityY = activity.findViewById<TextView>(R.id.velocityY)
+		val velocityX = activity.findViewById<TextView>(R.id.velocityX)
+
+		velocityY.text = "Y:${ this.position.velocity.get('y').toString() }"
+		velocityX.text = "X:${this.position.velocity.get('x').toString()}"
+
+		val revX = activity.findViewById<TextView>(R.id.reverseX)
+		val revY = activity.findViewById<TextView>(R.id.reverseY)
+	/*	Log.d("MAGNANI", "updateGraphic: here")
+		if(this.position.forwardX) {
+			revX.text = "Forward"
+		} else {
+			revX.text = "Backward"
+		}
+		Log.d("MAGNANI", "updateGraphic: here2")
+		if(this.position.forwardY) {
+			revY.text = "Forward"
+		} else {
+			revY.text = "Backward"
+		}
+*/
 	}
 }

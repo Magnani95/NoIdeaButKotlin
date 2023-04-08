@@ -55,7 +55,7 @@ class Engine (var fuelType : FuelType, var tank : Tank, var efficiencyManager: L
 				field = v
 		}
 
-	private var thrust : UInt = 0u
+	var thrust : UInt = 0u
 		set(v) = when (this.direction){
 			EngineDirection.FORWARD ->
 				if (v <= this.maxForwardThrust){

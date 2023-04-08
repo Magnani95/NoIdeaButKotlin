@@ -165,7 +165,7 @@
 
     <TextView
         android:id="@+id/velocityX"
-        android:layout_width="341dp"
+        android:layout_width="196dp"
         android:layout_height="26dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="28dp"
@@ -175,12 +175,51 @@
 
     <TextView
         android:id="@+id/velocityY"
-        android:layout_width="342dp"
-        android:layout_height="28dp"
+        android:layout_width="194dp"
+        android:layout_height="21dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="28dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/velocityX" />
+
+    <Button
+        android:id="@+id/AngleUp"
+        android:layout_width="51dp"
+        android:layout_height="48dp"
+        android:text="↑"
+        app:layout_constraintBottom_toBottomOf="@+id/velocityX"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/velocityX" />
+
+    <Button
+        android:id="@+id/angleDown"
+        android:layout_width="51dp"
+        android:layout_height="48dp"
+        android:text="↓"
+        app:layout_constraintBottom_toBottomOf="@+id/velocityY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/velocityY"
+        app:layout_constraintVertical_bias="0.629" />
+
+    <TextView
+        android:id="@+id/reverseX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/velocityX"
+        app:layout_constraintEnd_toStartOf="@+id/AngleUp"
+        app:layout_constraintStart_toEndOf="@+id/velocityX"
+        app:layout_constraintTop_toTopOf="@+id/velocityX" />
+
+    <TextView
+        android:id="@+id/reverseY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/velocityY"
+        app:layout_constraintEnd_toStartOf="@+id/angleDown"
+        app:layout_constraintStart_toEndOf="@+id/velocityY"
+        app:layout_constraintTop_toTopOf="@+id/velocityY" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
