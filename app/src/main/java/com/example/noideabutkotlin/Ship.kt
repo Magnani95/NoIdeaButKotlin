@@ -84,11 +84,13 @@ class Ship{
 					Log.d("MAGNANI", "tick")
 					this.tick(workerPool)
 					Log.d("MAGNANI", "pre-lock")
-					this.tickDone.lock()
+					//this.tickDone.lock()
 					Log.d("MAGNANI", "post-lock ${activity}")
 					updateGraphic(activity)
-					this.tickDone.unlock()
+					Log.d("MAGNANI", "gameCycle: post update graphics")
+					//this.tickDone.unlock()
 					Thread.sleep(1000)
+					Log.d("MAGNANI", "gamecycle: post sleep")
 				}
 			}else{
 				Log.d("MAGNANI", "tock")
@@ -126,9 +128,12 @@ class Ship{
 		velocityY.text = "Y:${ this.position.velocity.get('y').toString() }"
 		velocityX.text = "X:${this.position.velocity.get('x').toString()}"
 
+		val directionAngle = activity.findViewById<TextView>(R.id.directionAngle)
+		directionAngle.text = this.position.directionAngle.toString()
+
 		val revX = activity.findViewById<TextView>(R.id.reverseX)
 		val revY = activity.findViewById<TextView>(R.id.reverseY)
-	/*	Log.d("MAGNANI", "updateGraphic: here")
+/*      Log.d("MAGNANI", "updateGraphic: here")
 		if(this.position.forwardX) {
 			revX.text = "Forward"
 		} else {
@@ -140,6 +145,7 @@ class Ship{
 		} else {
 			revY.text = "Backward"
 		}
+		Log.d("MAGNANI", "updateGraphics: end")
 */
 	}
 }

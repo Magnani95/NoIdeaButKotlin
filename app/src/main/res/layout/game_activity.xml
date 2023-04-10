@@ -184,7 +184,7 @@
         app:layout_constraintTop_toBottomOf="@+id/velocityX" />
 
     <Button
-        android:id="@+id/AngleUp"
+        android:id="@+id/angleUp"
         android:layout_width="51dp"
         android:layout_height="48dp"
         android:text="↑"
@@ -206,9 +206,9 @@
         android:id="@+id/reverseX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="+++"
         app:layout_constraintBottom_toBottomOf="@+id/velocityX"
-        app:layout_constraintEnd_toStartOf="@+id/AngleUp"
+        app:layout_constraintEnd_toStartOf="@+id/angleUp"
         app:layout_constraintStart_toEndOf="@+id/velocityX"
         app:layout_constraintTop_toTopOf="@+id/velocityX" />
 
@@ -216,10 +216,29 @@
         android:id="@+id/reverseY"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="+++"
         app:layout_constraintBottom_toBottomOf="@+id/velocityY"
         app:layout_constraintEnd_toStartOf="@+id/angleDown"
         app:layout_constraintStart_toEndOf="@+id/velocityY"
         app:layout_constraintTop_toTopOf="@+id/velocityY" />
+
+    <TextView
+        android:id="@+id/directionAngle"
+        android:layout_width="118dp"
+        android:layout_height="26dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/Velocity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Velocity" />
+
+    <Button
+        android:id="@+id/event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="Event"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

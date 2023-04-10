@@ -3,6 +3,7 @@ package com.example.noideabutkotlin.mandatory
 import android.util.Log
 import com.example.noideabutkotlin.Ship
 import com.example.noideabutkotlin.generator.sensorGenerator
+import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
@@ -86,9 +87,10 @@ class Position() {
 		val radians : Double = directionAngle.toDouble() * Math.PI/180.0
 
 		this.velocity['y'] = this.velocity['y']!!
-		var trustY : ULong = (sin(radians) * ship.engineModule.thrust.toDouble()).toULong()
-		var trustX : ULong = (cos(radians) * ship.engineModule.thrust.toDouble()).toULong()
+		var trustY : ULong = (abs(sin(radians) * ship.engineModule.thrust.toDouble())).toULong()
+		var trustX : ULong = (abs(cos(radians) * ship.engineModule.thrust.toDouble())).toULong()
 
+		//Log.d("MAGNANI", "updateVelocity: rad  ${radians} - x: ${trustX} y: ${trustY} \t ${cos(radians)} ${sin(radians)}")
 		if (ship.engineModule.direction == EngineDirection.FORWARD) {
 			if(forwardX){
 				this.velocity['x'] = this.velocity['x']!! + trustX
