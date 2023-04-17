@@ -28,7 +28,7 @@ class GameActivity() : AppCompatActivity() {
 		Log.d("MAG_Entry", "GameCreate - OnCreate")
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.game_activity)
-		var s: String? = intent.getStringExtra("code")
+
 
 		var switch = findViewById<TextView>(R.id.engineDirection)
 		var enginePlus = findViewById<Button>(R.id.enginePlus)
@@ -108,8 +108,9 @@ class GameListener(var activity: GameActivity) : View.OnClickListener {
 			}else if (v.toString().contains("app:id/event")){
 				var intent = Intent(activity, EventActivity::class.java)
 				val REQUEST_CODE = 0
+				this.activity.ship.pause = true
 				intent.putExtra("title", "Refill tank")
-				intent.putExtra( "text", "We found some rocks that can be used as propellant. Should we use them?")
+				intent.putExtra( "description", "We found some rocks that can be used as propellant. Should we use them?")
 				activity.startActivity(intent)
 			}else{
 				Log.d("MAG-value", "premuto altro " )
