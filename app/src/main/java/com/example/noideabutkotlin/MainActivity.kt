@@ -21,12 +21,10 @@ class MainActivity : AppCompatActivity() {
 
     var bundle : Bundle? = null
     val listener : MainListener = MainListener(this)
-    var ship : Ship = Ship()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("MAG_Entry", "MainAct - OnCreate")
         super.onCreate(savedInstanceState)
-        var ship:Ship = Ship()
         setContentView(R.layout.main_activity)
     }
 

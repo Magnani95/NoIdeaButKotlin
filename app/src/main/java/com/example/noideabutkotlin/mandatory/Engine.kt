@@ -141,27 +141,30 @@ class Engine (var fuelType : FuelType, var tank : Tank, var efficiencyManager: L
 	}
 
 	fun setThrustPercentage(p : UByte) {
-		if (p < 100u) {
-			Log.d("MAGNANI", "setThrust(percent) ${p}")
-			when (this.direction) {
-				EngineDirection.FORWARD -> this.thrust =
-					(maxForwardThrust.toDouble() / 100.0 * p.toDouble() + 1).toUInt()
-				EngineDirection.BACKWARD -> this.thrust =
-					(maxBackwardThrust.toDouble() / 100.0 * p.toDouble() + 1).toUInt()
-			}
-			Log.d("MAGNANI", "setThrustPercentage: ${this.thrust} - ${getThrustPercentage()}")
-		}else if (p == 100.toUByte()){
-			when (this.direction) {
-				EngineDirection.FORWARD -> this.thrust = maxForwardThrust
-				EngineDirection.BACKWARD -> this.thrust = maxBackwardThrust
-			}
+		if (this.tank.isEmpty()){
+			this.thrust = 0u
 		}else{
-			Log.d("MAGNANI", "setThrust(percent): value is over 100%")
-			System.exit(-1)
+			if (p < 100u) {
+				Log.d("MAGNANI", "setThrust(percent) ${p}")
+				when (this.direction) {
+					EngineDirection.FORWARD -> this.thrust =
+						(maxForwardThrust.toDouble() / 100.0 * p.toDouble() + 1).toUInt()
+					EngineDirection.BACKWARD -> this.thrust =
+						(maxBackwardThrust.toDouble() / 100.0 * p.toDouble() + 1).toUInt()
+				}
+				Log.d("MAGNANI", "setThrustPercentage: ${this.thrust} - ${getThrustPercentage()}")
+			}else if (p == 100.toUByte()){
+				when (this.direction) {
+					EngineDirection.FORWARD -> this.thrust = maxForwardThrust
+					EngineDirection.BACKWARD -> this.thrust = maxBackwardThrust
+				}
+			}else{
+				Log.d("MAGNANI", "setThrust(percent): value is over 100%")
+				System.exit(-1)
+			}
 		}
 	}
 }
-
 class LoadManager{
 
 	var efficiency = UByteArray(101)

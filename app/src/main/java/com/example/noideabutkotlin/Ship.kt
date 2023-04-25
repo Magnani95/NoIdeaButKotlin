@@ -1,5 +1,6 @@
 package com.example.noideabutkotlin
 
+import android.os.Parcelable
 import android.util.Log
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -11,27 +12,19 @@ import com.example.noideabutkotlin.mandatory.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.locks.ReentrantLock
 
-class Ship{
-	lateinit var engineModule: Engine
-	lateinit var energyModule : Energy
-	lateinit var position : Position
+
+class Ship() : Parcelable{
+	var engineModule: Engine = engineGenerator()
+	var energyModule : Energy = energyGenerator()
+	var position : Position = positionGenerator()
 	var status : Status = Status()
 	var tickDone = ReentrantLock()
 	var running : Boolean = true
 	var pause : Boolean = false
-	init {
 
-	}
-	constructor(){
-		Log.d("MAGNANI", "engine generation ")
-		this.engineModule = engineGenerator()
-		Log.d("MAGNANI", "energy generation ")
-		this.energyModule = energyGenerator()
-		Log.d("MAGNANI", "position generation ")
-		this.position = positionGenerator()
-	}
-	constructor(engine: Engine){
-		this.engineModule = engine
+	constructor(parcel: android.os.Parcel) : this() {
+		running = parcel.readByte() != 0.toByte()
+		pause = parcel.readByte() != 0.toByte()
 	}
 
 	fun tick( workerPool: ExecutorService){
@@ -83,14 +76,10 @@ class Ship{
 				while (!pause){
 					Log.d("MAGNANI", "tick")
 					this.tick(workerPool)
-					Log.d("MAGNANI", "pre-lock")
 					//this.tickDone.lock()
-					Log.d("MAGNANI", "post-lock ${activity}")
 					updateGraphic(activity)
-					Log.d("MAGNANI", "gameCycle: post update graphics")
 					//this.tickDone.unlock()
 					Thread.sleep(1000)
-					Log.d("MAGNANI", "gamecycle: post sleep")
 				}
 			}else{
 				Log.d("MAGNANI", "tock")
@@ -147,5 +136,24 @@ class Ship{
 		}
 		Log.d("MAGNANI", "updateGraphics: end")
 */
+	}
+
+	override fun describeContents(): Int {
+		TODO("Not yet implemented")
+	}
+
+	override fun writeToParcel(parcel: android.os.Parcel, flags: Int) {
+		parcel.writeByte(if (running) 1 else 0)
+		parcel.writeByte(if (pause) 1 else 0)
+	}
+
+	companion object CREATOR : Parcelable.Creator<Ship> {
+		override fun createFromParcel(parcel: android.os.Parcel): Ship {
+			return Ship(parcel)
+		}
+
+		override fun newArray(size: Int): Array<Ship?> {
+			return arrayOfNulls(size)
+		}
 	}
 }

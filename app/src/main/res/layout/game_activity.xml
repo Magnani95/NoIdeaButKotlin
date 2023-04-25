@@ -54,9 +54,9 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="81dp"
         android:layout_height="21dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@+id/enginePercentage"
-        app:layout_constraintHorizontal_bias="0.62"
+        app:layout_constraintHorizontal_bias="0.096"
         app:layout_constraintStart_toEndOf="@+id/engineDirection"
         app:layout_constraintTop_toTopOf="@+id/enginePercentage" />
 
@@ -75,7 +75,7 @@
         android:layout_width="76dp"
         android:layout_height="24dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/fuelProgress"
         app:layout_constraintTop_toBottomOf="@+id/fuelMainText" />
@@ -86,7 +86,7 @@
         android:layout_width="80dp"
         android:layout_height="19dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fuelMainText" />
 
@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Fuel"
@@ -106,8 +106,8 @@
         android:id="@+id/Position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Position"
@@ -118,7 +118,7 @@
         android:id="@+id/Velocity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -226,9 +226,11 @@
         android:id="@+id/directionAngle"
         android:layout_width="118dp"
         android:layout_height="26dp"
+        android:layout_marginBottom="16dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/Velocity"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toEndOf="@+id/Velocity" />
 
     <Button

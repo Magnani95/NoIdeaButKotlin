@@ -22,12 +22,28 @@ class GameActivity() : AppCompatActivity() {
 	var listener : GameListener = GameListener(this)
 	var ship : Ship = Ship()
 	var begin : Boolean = true
-
-
+	lateinit var b : Bundle
 	override fun onCreate(savedInstanceState: Bundle?) {
 		Log.d("MAG_Entry", "GameCreate - OnCreate")
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.game_activity)
+		Log.d("MAGNANIS", "onCreate: bundle ${savedInstanceState}")
+
+		if (savedInstanceState != null) {
+			b = savedInstanceState
+		}else{
+			b = Bundle()
+		}
+		if (b.containsKey("ship")){
+			Log.d("MAGNANIS", "onCreate: ship parcelize")
+			this.ship = b.getParcelable<Ship>("ship")!!
+			this.ship.pause = false
+		}
+		if (b.containsKey("begin")){
+			Log.d("MAGNANI", "onCreate: begin")
+			this.begin = b.getBoolean("begin")
+		}
+
 
 
 		var switch = findViewById<TextView>(R.id.engineDirection)
@@ -61,8 +77,34 @@ class GameActivity() : AppCompatActivity() {
 			}
 		}
 		begin = false
+		ship.updateGraphic(this)
 	}
 
+	override fun onResume() {
+		super.onResume()
+
+	}
+
+	override fun onPause() {
+		super.onPause()
+		this.ship.pause = true
+	}
+	override fun onStop() {
+		super.onStop()
+
+	}
+
+	override fun onSaveInstanceState(outState: Bundle) {
+		super.onSaveInstanceState(outState)
+		Log.d("MAGNANI", "onSave..: inserting value")
+		outState.putParcelable("ship",ship)
+		outState.putBoolean("begin", begin)
+		outState.putInt("conta", 5)
+	}
+	override fun onDestroy() {
+		super.onDestroy()
+
+	}
 }
 
 class GameListener(var activity: GameActivity) : View.OnClickListener {
@@ -111,6 +153,7 @@ class GameListener(var activity: GameActivity) : View.OnClickListener {
 				this.activity.ship.pause = true
 				intent.putExtra("title", "Refill tank")
 				intent.putExtra( "description", "We found some rocks that can be used as propellant. Should we use them?")
+				intent.putExtra("ship", activity.ship)
 				activity.startActivity(intent)
 			}else{
 				Log.d("MAG-value", "premuto altro " )
