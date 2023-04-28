@@ -54,7 +54,7 @@ class Engine (var fuelType : FuelType, var tank : Tank, var efficiencyManager: L
 			}else{
 				field = v
 		}
-
+	@Volatile
 	var thrust : UInt = 0u
 		set(v) = when (this.direction){
 			EngineDirection.FORWARD ->

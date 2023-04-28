@@ -12,5 +12,5 @@
     <string name="ahead">Ahead</string>
     <string name="back">Back</string>
     <string name="_0">0%</string>
-
+    <string name="eventResource">You have no choice but to accept</string>
 </resources>

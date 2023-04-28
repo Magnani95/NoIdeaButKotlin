@@ -14,8 +14,10 @@ import com.example.noideabutkotlin.R
 import com.example.noideabutkotlin.Ship
 import com.example.noideabutkotlin.mandatory.EngineDirection
 import com.google.android.material.chip.Chip
+import java.lang.System.exit
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.system.exitProcess
 
 class GameActivity() : AppCompatActivity() {
 
@@ -24,10 +26,10 @@ class GameActivity() : AppCompatActivity() {
 	var begin : Boolean = true
 	lateinit var b : Bundle
 	override fun onCreate(savedInstanceState: Bundle?) {
-		Log.d("MAG_Entry", "GameCreate - OnCreate")
+		Log.d("MAGNANI", "GameCreate - OnCreate")
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.game_activity)
-		Log.d("MAGNANIS", "onCreate: bundle ${savedInstanceState}")
+		Log.d("MAGNANI", "onCreate: bundle ${savedInstanceState}")
 
 		if (savedInstanceState != null) {
 			b = savedInstanceState
@@ -35,7 +37,7 @@ class GameActivity() : AppCompatActivity() {
 			b = Bundle()
 		}
 		if (b.containsKey("ship")){
-			Log.d("MAGNANIS", "onCreate: ship parcelize")
+			Log.d("MAGNANI", "onCreate: ship parcelize")
 			this.ship = b.getParcelable<Ship>("ship")!!
 			this.ship.pause = false
 		}
@@ -67,9 +69,9 @@ class GameActivity() : AppCompatActivity() {
 	}
 
 	override fun onStart() {
-		Log.d("MAGNANI", "onStart: inizio funzione")
+		Log.d("MAGNANI", "onStart:")
 		super.onStart()
-
+		this.ship.running = true
 		val workerPool: ExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
 		if (begin) {
 			workerPool.submit {
@@ -77,28 +79,37 @@ class GameActivity() : AppCompatActivity() {
 			}
 		}
 		begin = false
+		this.ship.pause= false
 		ship.updateGraphic(this)
 	}
 
 	override fun onResume() {
+		Log.d("Magnani", "onResume: ")
 		super.onResume()
-
+		this.ship.pause = false
 	}
 
 	override fun onPause() {
 		super.onPause()
+		Log.d("Magnani", "onPause: ")
 		this.ship.pause = true
+		this.ship.running = false
+		this.begin = true
 	}
 	override fun onStop() {
 		super.onStop()
+		Log.d("Magnani", "onStop: ")
+		this.ship.pause = true
 
 	}
 
 	override fun onSaveInstanceState(outState: Bundle) {
 		super.onSaveInstanceState(outState)
 		Log.d("MAGNANI", "onSave..: inserting value")
+		ship.pause = true
+		ship.running = false
 		outState.putParcelable("ship",ship)
-		outState.putBoolean("begin", begin)
+		outState.putBoolean("begin", true)
 		outState.putInt("conta", 5)
 	}
 	override fun onDestroy() {
@@ -107,7 +118,26 @@ class GameActivity() : AppCompatActivity() {
 	}
 }
 
-class GameListener(var activity: GameActivity) : View.OnClickListener {
+class GameListener(var activity: GameActivity) : View.OnClickListener, AppCompatActivity() {
+
+	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+		super.onActivityResult(requestCode, resultCode, data)
+		Log.d("MAGNANI", "onActivityResult: INIZIO")
+		if(requestCode==1 && resultCode == RESULT_OK){
+			var c = data?.getIntExtra("choice", -1)
+			Log.d("MAGNANI", "onActivityResult: ${c}")
+			when (c) {
+				0 -> { activity.ship.engineModule.tank.refill(100000u)}
+				1 -> {
+					activity.ship.engineModule.tank.refill(50000u)
+				}
+				else -> {
+					Log.d("MAGNANI", "onActivityResult: Impossible bracket")
+					exitProcess(1)
+				}
+			}
+		}
+	}
 
 	override fun onClick(v: View?) {
 
@@ -119,24 +149,19 @@ class GameListener(var activity: GameActivity) : View.OnClickListener {
 
 		if (v != null) {
 			if (v.toString().contains("app:id/button}")) {
-				Log.d("MAG-value", "bottone")
 
 			} else if (v.toString().contains("app:id/engineDirection")) {
-				Log.d("MAG-value", "engineDirection")
 				if (activity.ship.engineModule.direction == EngineDirection.BACKWARD) {
 					activity.ship.engineModule.direction = EngineDirection.FORWARD
 				} else {
 					activity.ship.engineModule.direction = EngineDirection.BACKWARD
 				}
-				Log.d("MAGNANI", "onClick: ${activity.ship.engineModule.direction}")
 			} else if (v.toString().contains("app:id/enginePlus")){
 				if(activity.ship.engineModule.getThrustPercentage() <100u)
 					activity.ship.engineModule.setThrustPercentage((activity.ship.engineModule.getThrustPercentage()+1u).toUByte())
-				Log.d("MAGNANI", "EnginePlus to ${activity.ship.engineModule.getThrustPercentage()}")
 			} else if (v.toString().contains("app:id/engineMinus")){
 				if(activity.ship.engineModule.getThrustPercentage() > 0u)
 					activity.ship.engineModule.setThrustPercentage((activity.ship.engineModule.getThrustPercentage()-1u).toUByte())
-					Log.d("MAGNANI", "EngineMinus to ${activity.ship.engineModule.getThrustPercentage()}")
 
 			} else if (v.toString().contains("app:id/angleUp")) {
 				activity.ship.position.directionAngle = (activity.ship.position.directionAngle +1u) % 360u
@@ -152,9 +177,10 @@ class GameListener(var activity: GameActivity) : View.OnClickListener {
 				val REQUEST_CODE = 0
 				this.activity.ship.pause = true
 				intent.putExtra("title", "Refill tank")
-				intent.putExtra( "description", "We found some rocks that can be used as propellant. Should we use them?")
+				intent.putExtra( "description", "found some rocks")
 				intent.putExtra("ship", activity.ship)
-				activity.startActivity(intent)
+				//activity.startActivity(intent)
+				activity.startActivityForResult(intent, 1)
 			}else{
 				Log.d("MAG-value", "premuto altro " )
 			}

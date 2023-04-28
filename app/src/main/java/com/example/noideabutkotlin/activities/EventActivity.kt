@@ -1,10 +1,10 @@
 package com.example.noideabutkotlin.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.noideabutkotlin.R
@@ -13,7 +13,7 @@ import com.example.noideabutkotlin.Ship
 class EventActivity : AppCompatActivity() {
 
 	val listener : EventListener = EventListener(this)
-
+	var choice : Int = 0
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.event_activity)
@@ -35,19 +35,28 @@ class EventActivity : AppCompatActivity() {
 		val stillYes = findViewById<Button>(R.id.stillYesButton)
 		yes.setOnClickListener(listener)
 		stillYes.setOnClickListener(listener)
+
 	}
 
-	override fun onStart() {
-		super.onStart()
-
-
+	override fun finish() {
+		var i = Intent()
+		i.putExtra("choice", this.choice)
+		setResult(RESULT_OK, i)
+		super.finish()
 	}
 }
 
-class EventListener(activity: EventActivity)  : View.OnClickListener{
+class EventListener(var activity: EventActivity) : View.OnClickListener, AppCompatActivity(){
+
 	override fun onClick(v: View?) {
-
-
+		if (v.toString().contains("app:id/yesButton")){
+			activity.choice = 0
+		} else if (v.toString().contains("app:id/stillYesButton")){
+			activity.choice = 1
+		}else{
+			Log.d("MAGNANI", "onClick: impossible bracket")
+		}
+		activity.finish()
 	}
 
 }

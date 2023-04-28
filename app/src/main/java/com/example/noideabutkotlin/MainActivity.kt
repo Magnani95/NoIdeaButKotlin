@@ -23,20 +23,17 @@ class MainActivity : AppCompatActivity() {
     val listener : MainListener = MainListener(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("MAG_Entry", "MainAct - OnCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d("MAG_Entry", "MainAct: OnStart")
 
 
     }
 
     override fun onRestart() {
-        Log.d("MAG_Entry", "MainAct: OnRestart")
         super.onRestart()
     }
     // -- LISTENER  CALLs

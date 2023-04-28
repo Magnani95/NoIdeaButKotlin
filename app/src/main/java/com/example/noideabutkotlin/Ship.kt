@@ -28,44 +28,32 @@ class Ship() : Parcelable{
 	}
 
 	fun tick( workerPool: ExecutorService){
-		/*
-		Log.d("MAGNANI", "tick:prelock1")
-		this.tickDone.lock()
-		Log.d("MAGNANI", "tick:postlock1")
+
 		val l = ReentrantLock()
 
 		workerPool.submit{
-			Log.d("MAGNANI", "tick:prelock2")
-			//l.lock()
-			Log.d("MAGNANI", "tick:postlock2")
+			l.lock()
 			this.engineModule.tick(this)
-			Log.d("MAGNANI", "tick:pre-unlock2")
-			//l.unlock()
-			Log.d("MAGNANI", "tick:post-unlock2")
+			l.unlock()
 		}
 		workerPool.submit{
 			this.energyModule.tick(this)
 		}
 		workerPool.submit{
-			Log.d("MAGNANI", "tick:prelock3")
-			//l.lock()
-			Log.d("MAGNANI", "tick:postlock3")
+			l.lock()
 			this.position.tick(this)
-			Log.d("MAGNANI", "tick:pre-unlock3")
-			//l.unlock()
-			Log.d("MAGNANI", "tick:post-unlock2")
+			l.unlock()
 		}
 
-		Log.d("MAGNANI", "tick:pre-unlock1")
-		this.tickDone.unlock()
-		Log.d("MAGNANI", "tick:post-unlock1")
-		*/
+
+	/*
 		Log.d("MAGNANI", "tick:engine module")
 		this.engineModule.tick(this)
 		Log.d("MAGNANI", "tick:energy module")
 		this.energyModule.tick(this)
 		Log.d("MAGNANI", "tick:position module")
 		this.position.tick(this)
+		 */
 
 	}
 
@@ -76,9 +64,7 @@ class Ship() : Parcelable{
 				while (!pause){
 					Log.d("MAGNANI", "tick")
 					this.tick(workerPool)
-					//this.tickDone.lock()
 					updateGraphic(activity)
-					//this.tickDone.unlock()
 					Thread.sleep(1000)
 				}
 			}else{
@@ -122,7 +108,8 @@ class Ship() : Parcelable{
 
 		val revX = activity.findViewById<TextView>(R.id.reverseX)
 		val revY = activity.findViewById<TextView>(R.id.reverseY)
-/*      Log.d("MAGNANI", "updateGraphic: here")
+        /*
+        Log.d("MAGNANI", "updateGraphic: here")
 		if(this.position.forwardX) {
 			revX.text = "Forward"
 		} else {
@@ -135,7 +122,7 @@ class Ship() : Parcelable{
 			revY.text = "Backward"
 		}
 		Log.d("MAGNANI", "updateGraphics: end")
-*/
+		*/
 	}
 
 	override fun describeContents(): Int {

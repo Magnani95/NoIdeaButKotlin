@@ -8,9 +8,9 @@
     <string name="exitButtonFinal">You should use gestures and bottom buttons.
                   \nPlease, don\'t play anymore our(MY) game.</string>
 
-    <string name="shipName">The Commodore 63</string>
+    <string name="shipName">The Commodore 64</string>
     <string name="ahead">Ahead</string>
     <string name="back">Back</string>
     <string name="_0">0%</string>
-
+    <string name="eventResource">We found some rocks that can be used as propellant. Should we use them?</string>
 </resources>
