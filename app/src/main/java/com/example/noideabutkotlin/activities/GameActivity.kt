@@ -26,10 +26,8 @@ class GameActivity() : AppCompatActivity() {
 	var begin : Boolean = true
 	lateinit var b : Bundle
 	override fun onCreate(savedInstanceState: Bundle?) {
-		Log.d("MAGNANI", "GameCreate - OnCreate")
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.game_activity)
-		Log.d("MAGNANI", "onCreate: bundle ${savedInstanceState}")
 
 		if (savedInstanceState != null) {
 			b = savedInstanceState
@@ -37,12 +35,10 @@ class GameActivity() : AppCompatActivity() {
 			b = Bundle()
 		}
 		if (b.containsKey("ship")){
-			Log.d("MAGNANI", "onCreate: ship parcelize")
 			this.ship = b.getParcelable<Ship>("ship")!!
 			this.ship.pause = false
 		}
 		if (b.containsKey("begin")){
-			Log.d("MAGNANI", "onCreate: begin")
 			this.begin = b.getBoolean("begin")
 		}
 
@@ -64,12 +60,12 @@ class GameActivity() : AppCompatActivity() {
 		turnCounterclockwise.setOnClickListener(listener)
 
 		var event = findViewById<Button>(R.id.event)
-
+		var share = findViewById<Button>(R.id.share)
 		event.setOnClickListener(listener)
+		share.setOnClickListener(listener)
 	}
 
 	override fun onStart() {
-		Log.d("MAGNANI", "onStart:")
 		super.onStart()
 		this.ship.running = true
 		val workerPool: ExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
@@ -84,41 +80,33 @@ class GameActivity() : AppCompatActivity() {
 	}
 
 	override fun onResume() {
-		Log.d("Magnani", "onResume: ")
 		super.onResume()
 		this.ship.pause = false
 	}
 
 	override fun onPause() {
 		super.onPause()
-		Log.d("Magnani", "onPause: ")
 		this.ship.pause = true
 		this.ship.running = false
 		this.begin = true
 	}
 	override fun onStop() {
 		super.onStop()
-		Log.d("Magnani", "onStop: ")
 		this.ship.pause = true
 
 	}
 
 	override fun onSaveInstanceState(outState: Bundle) {
 		super.onSaveInstanceState(outState)
-		Log.d("MAGNANI", "onSave..: inserting value")
 		ship.pause = true
 		ship.running = false
 		outState.putParcelable("ship",ship)
 		outState.putBoolean("begin", true)
-		outState.putInt("conta", 5)
 	}
 	override fun onDestroy() {
 		super.onDestroy()
 
 	}
-}
-
-class GameListener(var activity: GameActivity) : View.OnClickListener, AppCompatActivity() {
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		super.onActivityResult(requestCode, resultCode, data)
@@ -127,9 +115,9 @@ class GameListener(var activity: GameActivity) : View.OnClickListener, AppCompat
 			var c = data?.getIntExtra("choice", -1)
 			Log.d("MAGNANI", "onActivityResult: ${c}")
 			when (c) {
-				0 -> { activity.ship.engineModule.tank.refill(100000u)}
+				0 -> { ship.engineModule.tank.refill(100000u)}
 				1 -> {
-					activity.ship.engineModule.tank.refill(50000u)
+					ship.engineModule.tank.refill(50000u)
 				}
 				else -> {
 					Log.d("MAGNANI", "onActivityResult: Impossible bracket")
@@ -138,6 +126,9 @@ class GameListener(var activity: GameActivity) : View.OnClickListener, AppCompat
 			}
 		}
 	}
+}
+
+class GameListener(var activity: GameActivity) : View.OnClickListener, AppCompatActivity() {
 
 	override fun onClick(v: View?) {
 
@@ -172,15 +163,22 @@ class GameListener(var activity: GameActivity) : View.OnClickListener, AppCompat
 				} else {
 					activity.ship.position.directionAngle--
 				}
-			}else if (v.toString().contains("app:id/event")){
+			}else if (v.toString().contains("app:id/event")) {
 				var intent = Intent(activity, EventActivity::class.java)
 				val REQUEST_CODE = 0
 				this.activity.ship.pause = true
 				intent.putExtra("title", "Refill tank")
-				intent.putExtra( "description", "found some rocks")
+				intent.putExtra("description", "found some rocks")
 				intent.putExtra("ship", activity.ship)
 				//activity.startActivity(intent)
 				activity.startActivityForResult(intent, 1)
+
+			}else if (v.toString().contains("app:id/share")){
+
+				var intent : Intent = Intent(activity, FirebaseActivity::class.java)
+				intent.putExtra("ship", activity.ship)
+				activity.startActivity(intent)
+
 			}else{
 				Log.d("MAG-value", "premuto altro " )
 			}

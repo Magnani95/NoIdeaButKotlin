@@ -31,10 +31,6 @@ class EventActivity : AppCompatActivity() {
 
 		var ship: Ship = intent.getParcelableExtra<Ship>("ship")!!
 
-		val yes = findViewById<Button>(R.id.yesButton)
-		val stillYes = findViewById<Button>(R.id.stillYesButton)
-		yes.setOnClickListener(listener)
-		stillYes.setOnClickListener(listener)
 
 	}
 

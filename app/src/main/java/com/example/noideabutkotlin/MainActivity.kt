@@ -59,7 +59,6 @@ class MainListener(var activity: MainActivity) {
     fun startClick(v:View){
 
         var intent : Intent = Intent(activity, GameActivity::class.java)
-        val REQUEST_CODE : Int = 0
         intent.putExtra("code", "this is the message")
         //intent.putExtra("ship", activity.ship)
         //startActivityForResult(activity, intent, REQUEST_CODE, activity.bundle )
