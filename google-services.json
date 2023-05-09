@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "997893925528",
+    "project_id": "noideabutkotlin",
+    "storage_bucket": "noideabutkotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997893925528:android:b3cdba0d43e4067b593eed",
+        "android_client_info": {
+          "package_name": "com.example.noideabutkotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997893925528-63vi4g0pn0rqu54g4d4mccm52l8b0gv6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1i_10psSq8ddmoUEoBchAkwFe9AAV_do"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997893925528-63vi4g0pn0rqu54g4d4mccm52l8b0gv6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
