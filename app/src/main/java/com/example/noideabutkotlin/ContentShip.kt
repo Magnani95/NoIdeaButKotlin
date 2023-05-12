@@ -36,10 +36,10 @@ class ContentShip : ContentProvider() {
 	val DATABASE_VERSION = 1
 	val CREATE_DB_TABLE = " CREATE TABLE " + TABLE_NAME +
 			" (user TEXT PRIMARY KEY, " +
-			" sectorX INTEGER NOT NULL," +
-			" sectorY INTEGER NOT NULL" +
-			"positionX INTEGER NOT NULL" +
-			"positionY INTEGER NOT NULL" +
+			" sectorX TEXT NOT NULL," +
+			" sectorY TEXT NOT NULL" +
+			"positionX TEXT NOT NULL" +
+			"positionY TEXT NOT NULL" +
 			");"
 
 	private var dbHelper: DBWrapper? = null
@@ -116,7 +116,8 @@ class ContentShip : ContentProvider() {
 	}
 
 	override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-		TODO("Not yet implemented")
+		//todo
+		return -1
 	}
 
 	override fun delete(uri: Uri, extras: Bundle?): Int {
@@ -125,10 +126,7 @@ class ContentShip : ContentProvider() {
 		return db!!.delete(TABLE_NAME, selection as String?, selectionArgs as Array<out String>?)
 	}
 
-	override fun update(uri: Uri,
-	                    values: ContentValues?,
-	                    selection: String?,
-	                    selectionArgs: Array<out String>?): Int {
+	override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?): Int {
 		TODO("Not yet implemented")
 	}
 
@@ -148,10 +146,10 @@ class DBWrapper (context: Context?) : SQLiteOpenHelper(context, "ship", null, 1)
 	override fun onCreate(db: SQLiteDatabase) {
 		val CREATE_DB_TABLE = " CREATE TABLE " + "ships" +
 				"(user TEXT PRIMARY KEY, " +
-				" sectorX INTEGER NOT NULL," +
-				" sectorY INTEGER NOT NULL," +
-				"positionX INTEGER NOT NULL," +
-				"positionY INTEGER NOT NULL" +
+				" sectorX TEXT NOT NULL," +
+				" sectorY TEXT NOT NULL," +
+				"positionX TEXT NOT NULL," +
+				"positionY TEXT NOT NULL" +
 				");"
 		db.execSQL(CREATE_DB_TABLE)
 	}

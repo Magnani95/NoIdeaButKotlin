@@ -1,6 +1,7 @@
 package com.example.noideabutkotlin.activities
 
 import android.content.ContentResolver
+import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.noideabutkotlin.ContentShip
 import com.example.noideabutkotlin.R
 import com.example.noideabutkotlin.Ship
+import com.google.android.datatransport.runtime.firebase.transport.LogEventDropped
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -41,10 +43,11 @@ class FirebaseActivity : AppCompatActivity() {
 
 	val auth : FirebaseAuth = FirebaseAuth.getInstance()
 	val listener = FirebaseListener(this)
-
+	lateinit var ship : Ship
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.firebase_login_activity)
+		ship = intent.getParcelableExtra<Ship>("ship")!!
 	}
 	override fun onResume() {
 		super.onResume()
@@ -53,17 +56,23 @@ class FirebaseActivity : AppCompatActivity() {
 
 		var register = findViewById<Button>(R.id.create)
 		register.setOnClickListener(listener)
+
+		var save = findViewById<Button>(R.id.saveButton)
+		var load = findViewById<Button>(R.id.loadButton)
+		save.setOnClickListener(listener)
+		load.setOnClickListener(listener)
+
 	}
 
-	fun contentProvider(){
+	fun contentProvider(user : String){
 		var uri: Uri = Uri.parse("content://testing.cpex.ContentStudenti/ships")
-		var resolver : ContentResolver =this.contentResolver
+		var resolver : ContentResolver = this.contentResolver
 		var client = resolver.acquireContentProviderClient(uri)
-		var contentShip = client?.getLocalContentProvider();
+		var contentShip = client?.localContentProvider;
 
 		val projection = arrayOf<String>(ContentShip.USER, ContentShip.POSITIONX, ContentShip.POSITIONY)
 		val selectionClause: String = ContentShip.USER.toString() + "= ?"
-		val s = Array<String>(1) { "magnani95@gmail.com" }
+		val s = Array<String>(1) { user }
 
 		var c : Cursor? = this.contentResolver.query(uri, projection, selectionClause,s, null )
 		if (c!=null){
@@ -80,6 +89,7 @@ class FirebaseActivity : AppCompatActivity() {
 
 					index = c.getColumnIndex(ContentShip.SECTORY)
 					val sy = c.getInt(index)
+					Log.d("MAGNANI","read [$sx][$sy] $x - $y")
 				}
 			}else{
 				Log.d("TAG", "insieme vuoto")
@@ -100,19 +110,44 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 	override fun onClick(v: View?) {
 		var e = activity.findViewById<EditText>(R.id.email)
 		var p = activity.findViewById<EditText>(R.id.password)
-		if (e.text.toString().isEmpty() || p.text.toString().isEmpty()){
-			Log.d("MAGNANI", "field is empty")
-			return
-		}
+
 		if (v.toString().contains("app:id/create")) {
+			if (e.text.toString().isEmpty() || p.text.toString().isEmpty()){
+				Log.d("MAGNANI", "a field is empty")
+				return
+			}
 			var email = e.text.toString()
 			var password = p.text.toString()
 
 			activity.auth.createUserWithEmailAndPassword(email, password)
 				.addOnCompleteListener(activity, createListener)
 		}else if (v.toString().contains("app:id/login")){
+			if (e.text.toString().isEmpty() || p.text.toString().isEmpty()){
+				Log.d("MAGNANI", "a field is empty")
+				return
+			}
 			activity.auth.signInWithEmailAndPassword(e.text.toString(), p.text.toString())
 				.addOnCompleteListener(loginListener)
+		}else if(v.toString().contains("app:id/saveButton")){
+			if (e.text.toString().isEmpty()) {
+				Log.d("MAGNANI", "USER field is empty")
+				return
+			}
+			Log.d("MAGNANI0", "savings... ")
+			var v = ContentValues()
+			var p = activity.ship.position
+			v.put(ContentShip.USER, e.toString())
+			v.put(ContentShip.POSITIONX, p.coordinates['x'].toString())
+			v.put(ContentShip.POSITIONY, p.coordinates['y'].toString())
+			v.put(ContentShip.SECTORX, p.sector['x'].toString())
+			v.put(ContentShip.SECTORY, p.sector['y'].toString())
+			Log.d("MAGNANI0", "preinsert ")
+			activity.contentResolver.insert(ContentShip.CONTENT_URI,v)
+			Log.d("MAGNANI0", "Data saved on disk ")
+		}else if(v.toString().contains("app:id/loadButton")){
+			activity.contentProvider(e.toString())
+		}else{
+			Log.d("MAGNANI", "onClick: Impossible branch")
 		}
 	}
 
