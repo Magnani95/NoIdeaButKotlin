@@ -168,7 +168,7 @@ class GameListener(var activity: GameActivity) : View.OnClickListener, AppCompat
 				val REQUEST_CODE = 0
 				this.activity.ship.pause = true
 				intent.putExtra("title", "Refill tank")
-				intent.putExtra("description", "found some rocks")
+				intent.putExtra("description", R.string.eventResource)
 				intent.putExtra("ship", activity.ship)
 				//activity.startActivity(intent)
 				activity.startActivityForResult(intent, 1)

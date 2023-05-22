@@ -17,7 +17,7 @@ import android.util.Log
 
 class ContentShip : ContentProvider() {
 	companion object {
-		val PROVIDER_NAME = "testing.cpex.ContentStudenti"
+		val PROVIDER_NAME = "com.example.noideabutkotlin.ContentShip"
 		val URL = "content://$PROVIDER_NAME/ships"
 		val CONTENT_URI: Uri = Uri.parse(URL)
 
@@ -102,7 +102,7 @@ class ContentShip : ContentProvider() {
 		)
 	}
 	override fun getType(uri: Uri): String? {
-		return "testing.cpex.Studente"
+		return "com.example.noideabutkotlin.ContentShip"
 	}
 	override fun insert(uri: Uri, values: ContentValues?): Uri? {
 		var rowID: Long = -1
@@ -116,8 +116,8 @@ class ContentShip : ContentProvider() {
 	}
 
 	override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-		//todo
-		return -1
+		TODO("Not implemented yet")
+
 	}
 
 	override fun delete(uri: Uri, extras: Bundle?): Int {

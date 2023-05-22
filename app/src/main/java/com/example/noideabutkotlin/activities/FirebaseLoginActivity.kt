@@ -65,7 +65,7 @@ class FirebaseActivity : AppCompatActivity() {
 	}
 
 	fun contentProvider(user : String){
-		var uri: Uri = Uri.parse("content://testing.cpex.ContentStudenti/ships")
+		var uri: Uri = Uri.parse("content://com.example.noideabutkotlin/ContentShip/ships")
 		var resolver : ContentResolver = this.contentResolver
 		var client = resolver.acquireContentProviderClient(uri)
 		var contentShip = client?.localContentProvider;
