@@ -42,8 +42,6 @@ class GameActivity() : AppCompatActivity() {
 			this.begin = b.getBoolean("begin")
 		}
 
-
-
 		var switch = findViewById<TextView>(R.id.engineDirection)
 		var enginePlus = findViewById<Button>(R.id.enginePlus)
 		var engineMinus = findViewById<Button>(R.id.engineMinus)

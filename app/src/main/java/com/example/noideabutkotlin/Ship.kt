@@ -10,6 +10,7 @@ import com.example.noideabutkotlin.generator.engineGenerator
 import com.example.noideabutkotlin.generator.positionGenerator
 import com.example.noideabutkotlin.mandatory.*
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Semaphore
 import java.util.concurrent.locks.ReentrantLock
 
 
@@ -30,21 +31,29 @@ class Ship() : Parcelable{
 	fun tick( workerPool: ExecutorService){
 
 		val l = ReentrantLock()
-
+		val s = Semaphore(3)
 		workerPool.submit{
+			s.acquire()
 			l.lock()
 			this.engineModule.tick(this)
 			l.unlock()
+			s.release()
 		}
 		workerPool.submit{
+			s.acquire()
 			this.energyModule.tick(this)
+			s.release()
 		}
 		workerPool.submit{
+			s.acquire()
 			l.lock()
 			this.position.tick(this)
 			l.unlock()
+			s.release()
 		}
-
+		while (s.availablePermits() != 3){
+			Thread.sleep(10)
+		}
 
 	/*
 		Log.d("MAGNANI", "tick:engine module")

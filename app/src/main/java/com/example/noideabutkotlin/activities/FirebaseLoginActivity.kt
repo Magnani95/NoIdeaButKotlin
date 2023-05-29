@@ -65,16 +65,15 @@ class FirebaseActivity : AppCompatActivity() {
 	}
 
 	fun contentProvider(user : String){
-		var uri: Uri = Uri.parse("content://com.example.noideabutkotlin/ContentShip/ships")
 		var resolver : ContentResolver = this.contentResolver
-		var client = resolver.acquireContentProviderClient(uri)
+		var client = resolver.acquireContentProviderClient(ContentShip.CONTENT_URI)
 		var contentShip = client?.localContentProvider;
 
 		val projection = arrayOf<String>(ContentShip.USER, ContentShip.POSITIONX, ContentShip.POSITIONY)
 		val selectionClause: String = ContentShip.USER.toString() + "= ?"
 		val s = Array<String>(1) { user }
 
-		var c : Cursor? = this.contentResolver.query(uri, projection, selectionClause,s, null )
+		var c : Cursor? = this.contentResolver.query(ContentShip.CONTENT_URI, projection, selectionClause,s, null )
 		if (c!=null){
 			if(c.count >0){
 				while(c.moveToNext()){
