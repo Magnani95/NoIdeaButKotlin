@@ -25,6 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.example.noideabutkotlin.ContentShip"
+            android:name="ContentShip"
+        ></provider>
         <activity android:name=".activities.GameActivity" />
         <activity android:name=".activities.EventActivity" />
         <activity android:name=".activities.FirebaseActivity" />

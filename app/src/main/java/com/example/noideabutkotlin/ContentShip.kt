@@ -116,7 +116,7 @@ class ContentShip : ContentProvider() {
 	}
 
 	override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-		TODO("Not implemented yet")
+		return db!!.delete(TABLE_NAME,selection, selectionArgs)
 
 	}
 
@@ -127,14 +127,13 @@ class ContentShip : ContentProvider() {
 	}
 
 	override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?): Int {
-		TODO("Not yet implemented")
+		return db!!.update(TABLE_NAME, values, selection, selectionArgs)
 	}
 
 	override fun update(uri: Uri, values: ContentValues?, extras: Bundle?): Int {
 		var selection = extras?.get("selection")
 		var selectionArgs = extras?.get("selectionArgs")
-		return db!!.update(TABLE_NAME, values, selection as String?,
-				selectionArgs as Array<out String>?
+		return db!!.update(TABLE_NAME, values, selection as String?, selectionArgs as Array<out String>?
 		)
 	}
 }
