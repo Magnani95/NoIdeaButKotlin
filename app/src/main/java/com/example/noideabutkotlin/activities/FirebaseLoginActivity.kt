@@ -63,41 +63,6 @@ class FirebaseActivity : AppCompatActivity() {
 		load.setOnClickListener(listener)
 
 	}
-
-	fun contentProvider(user : String){
-		var resolver : ContentResolver = this.contentResolver
-		var client = resolver.acquireContentProviderClient(ContentShip.CONTENT_URI)
-		var contentShip = client?.localContentProvider;
-
-		val projection = arrayOf<String>(ContentShip.USER, ContentShip.POSITIONX, ContentShip.POSITIONY)
-		val selectionClause: String = ContentShip.USER.toString() + "= ?"
-		val s = Array<String>(1) { user }
-
-		var c : Cursor? = this.contentResolver.query(ContentShip.CONTENT_URI, projection, selectionClause,s, null )
-		if (c!=null){
-			if(c.count >0){
-				while(c.moveToNext()){
-					var index = c.getColumnIndex(ContentShip.POSITIONX)
-					val x = c.getInt(index)
-
-					index = c.getColumnIndex(ContentShip.POSITIONY)
-					val y = c.getInt(index)
-
-					index = c.getColumnIndex(ContentShip.SECTORX)
-					val sx = c.getInt(index)
-
-					index = c.getColumnIndex(ContentShip.SECTORY)
-					val sy = c.getInt(index)
-					Log.d("MAGNANI","read [$sx][$sy] $x - $y")
-				}
-			}else{
-				Log.d("TAG", "insieme vuoto")
-			}
-		}else{
-			Log.d("TAG", "Errore nel db o nella query")
-		}
-
-	}
 }
 
 class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
@@ -140,11 +105,35 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 			v.put(ContentShip.POSITIONY, p.coordinates['y'].toString())
 			v.put(ContentShip.SECTORX, p.sector['x'].toString())
 			v.put(ContentShip.SECTORY, p.sector['y'].toString())
-			Log.d("MAGNANI0", "preinsert ")
 			activity.contentResolver.insert(ContentShip.CONTENT_URI,v)
-			Log.d("MAGNANI0", "Data saved on disk ")
+			Log.d("MAGNANI0", "Data saved on disk [${p.sector['x'].toString()}][${p.sector['y'].toString()}] ${p.coordinates['x'].toString()} - ${p.coordinates['y'].toString()}")
 		}else if(v.toString().contains("app:id/loadButton")){
-			activity.contentProvider(e.toString())
+			var projection : Array<String> = arrayOf(ContentShip.POSITIONX, ContentShip.POSITIONY, ContentShip.SECTORX, ContentShip.SECTORY)
+			var selectionClause = ContentShip.USER + "=?"
+			var user : Array<String> = arrayOf(e.toString())
+
+			var c = activity.contentResolver.query(ContentShip.CONTENT_URI,projection, selectionClause, user, null )
+
+			if (c != null){
+				if (c.count >0){
+					while (c.moveToNext()){
+						var index : Int = c.getColumnIndex(ContentShip.POSITIONX)
+						var px = c.getString(index)
+						index = c.getColumnIndex(ContentShip.POSITIONY)
+						var py = c.getString(index)
+						index = c.getColumnIndex(ContentShip.SECTORX)
+						var sx = c.getString(index)
+						index = c.getColumnIndex(ContentShip.SECTORY)
+						var sy = c.getString(index)
+						Log.d("MAGNANI", "load: [$sx][$sy] $px - $py ")
+						val p = activity.ship.position
+						p.coordinates['x'] = px.toULong()
+						p.coordinates['Y'] = py.toULong()
+						p.sector['x'] = sx.toULong()
+						p.sector['y'] = sx.toULong()
+					}
+				}else Log.d("MAGNANI", "insieme vuoto")
+			}else Log.d("MAGNANI", "Errore nel db o nella query")
 		}else{
 			Log.d("MAGNANI", "onClick: Impossible branch")
 		}

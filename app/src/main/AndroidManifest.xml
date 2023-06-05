@@ -16,6 +16,7 @@
         android:usesCleartextTraffic="true">
 
 
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -32,7 +33,10 @@
         <activity android:name=".activities.GameActivity" />
         <activity android:name=".activities.EventActivity" />
         <activity android:name=".activities.FirebaseActivity" />
+        <activity android:name=".activities.OpenGLESActivity" />
 
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
 
 </manifest>
