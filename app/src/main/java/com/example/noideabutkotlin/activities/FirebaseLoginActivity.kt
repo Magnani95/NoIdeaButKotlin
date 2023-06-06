@@ -2,6 +2,7 @@ package com.example.noideabutkotlin.activities
 
 import android.content.ContentResolver
 import android.content.ContentValues
+import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
@@ -61,7 +62,13 @@ class FirebaseActivity : AppCompatActivity() {
 		var load = findViewById<Button>(R.id.loadButton)
 		save.setOnClickListener(listener)
 		load.setOnClickListener(listener)
+	}
 
+	override fun finish() {
+		var i = Intent()
+		i.putExtra("ship", ship)
+		setResult(RESULT_OK,i)
+		super.finish()
 	}
 }
 
@@ -74,7 +81,7 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 	override fun onClick(v: View?) {
 		var e = activity.findViewById<EditText>(R.id.email)
 		var p = activity.findViewById<EditText>(R.id.password)
-
+		var r = activity.findViewById<TextView>(R.id.result)
 		if (v.toString().contains("app:id/create")) {
 			if (e.text.toString().isEmpty() || p.text.toString().isEmpty()){
 				Log.d("MAGNANI", "a field is empty")
@@ -125,12 +132,14 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 						var sx = c.getString(index)
 						index = c.getColumnIndex(ContentShip.SECTORY)
 						var sy = c.getString(index)
-						Log.d("MAGNANI", "load: [$sx][$sy] $px - $py ")
+						Log.d("MAGNANI", "load of ${e.text}: [$sx][$sy] $px - $py ")
 						val p = activity.ship.position
 						p.coordinates['x'] = px.toULong()
 						p.coordinates['Y'] = py.toULong()
 						p.sector['x'] = sx.toULong()
 						p.sector['y'] = sx.toULong()
+						r.text = "${e.text} visited: [$sx][$sy] $px - $py "
+						//activity.finish()
 					}
 				}else Log.d("MAGNANI", "insieme vuoto")
 			}else Log.d("MAGNANI", "Errore nel db o nella query")

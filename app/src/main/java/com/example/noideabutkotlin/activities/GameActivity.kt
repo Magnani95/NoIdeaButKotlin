@@ -122,6 +122,15 @@ class GameActivity() : AppCompatActivity() {
 					exitProcess(1)
 				}
 			}
+		} else if(requestCode==2 && resultCode == RESULT_OK){
+			var s = data?.getParcelableExtra<Ship>("ship")
+			/*Log.d("COORD", "onActivityResult: OLD [${ship.position.sector['x']}][${ship.position.sector['y']}] ${ship.position.coordinates['x']} - ${ship.position.coordinates['y']}")
+			Log.d("COORD", "onActivityResult: NEW [${s!!.position.sector['x']!!}][${s.position.sector['y']!!}] ${s.position.coordinates['x']} - ${s.position.coordinates['y']}")
+			ship.position.coordinates['x'] = s!!.position.coordinates['x']!!
+			ship.position.coordinates['y'] = s.position.coordinates['y']!!
+			ship.position.sector['x'] = s.position.sector['x']!!
+			ship.position.sector['y'] = s.position.sector['y']!!
+			 */
 		}
 	}
 }
@@ -175,7 +184,7 @@ class GameListener(var activity: GameActivity) : View.OnClickListener, AppCompat
 
 				var intent : Intent = Intent(activity, FirebaseActivity::class.java)
 				intent.putExtra("ship", activity.ship)
-				activity.startActivity(intent)
+				activity.startActivityForResult(intent, 2)
 
 			}else{
 				Log.d("MAG-value", "premuto altro " )

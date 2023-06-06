@@ -113,7 +113,7 @@ class Ship() : Parcelable{
 		velocityX.text = "X:${this.position.velocity.get('x').toString()}"
 
 		val directionAngle = activity.findViewById<TextView>(R.id.directionAngle)
-		directionAngle.text = this.position.directionAngle.toString()
+		directionAngle.text = "${this.position.directionAngle.toString()}°"
 
 		val revX = activity.findViewById<TextView>(R.id.reverseX)
 		val revY = activity.findViewById<TextView>(R.id.reverseY)

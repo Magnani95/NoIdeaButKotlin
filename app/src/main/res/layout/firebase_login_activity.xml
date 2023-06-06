@@ -49,8 +49,8 @@
 
     <TextView
         android:id="@+id/result"
-        android:layout_width="176dp"
-        android:layout_height="27dp"
+        android:layout_width="379dp"
+        android:layout_height="67dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
