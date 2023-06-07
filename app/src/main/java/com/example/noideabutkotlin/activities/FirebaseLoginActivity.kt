@@ -73,12 +73,17 @@ class FirebaseActivity : AppCompatActivity() {
 		var load = findViewById<Button>(R.id.loadButton)
 		save.setOnClickListener(listener)
 		load.setOnClickListener(listener)
+
+		listener.populate()
 	}
 
 	override fun finish() {
 		var i = Intent()
-		i.putExtra("ship", ship)
 		setResult(RESULT_OK,i)
+		i.putExtra("px", px)
+		i.putExtra("py", py)
+		i.putExtra("sx", sx)
+		i.putExtra("sy", sy)
 		super.finish()
 	}
 }
@@ -88,6 +93,17 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 	var createListener = CreateListener(activity)
 	var loginListener = LoginListener(activity)
 
+	fun populate(){
+		Log.d("MAGNANI", "populate: insert of user jojo")
+		var v = ContentValues()
+		v.put(ContentShip.USER, "jojo")
+		v.put(ContentShip.POSITIONX, "42")
+		v.put(ContentShip.POSITIONY, "42")
+		v.put(ContentShip.SECTORX, "100")
+		v.put(ContentShip.SECTORY, "101")
+
+		activity.contentResolver.insert(ContentShip.CONTENT_URI,v)
+	}
 
 	override fun onClick(v: View?) {
 		var e = activity.findViewById<EditText>(R.id.email)
@@ -117,14 +133,7 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 			}
 			Log.d("MAGNANI0", "savings... ")
 			var v = ContentValues()
-			var p = activity.ship.position
-			/*
-			v.put(ContentShip.USER, e.toString())
-			v.put(ContentShip.POSITIONX, p.coordinates['x'].toString())
-			v.put(ContentShip.POSITIONY, p.coordinates['y'].toString())
-			v.put(ContentShip.SECTORX, p.sector['x'].toString())
-			v.put(ContentShip.SECTORY, p.sector['y'].toString())
-			 */
+
 			v.put(ContentShip.USER, e.toString())
 			v.put(ContentShip.POSITIONX, activity.px)
 			v.put(ContentShip.POSITIONY, activity.py)
@@ -152,11 +161,12 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 						index = c.getColumnIndex(ContentShip.SECTORY)
 						var sy = c.getString(index)
 						Log.d("MAGNANI", "load of ${e.text}: [$sx][$sy] $px - $py ")
+
 						val p = activity.ship.position
-						p.coordinates['x'] = px.toULong()
-						p.coordinates['Y'] = py.toULong()
-						p.sector['x'] = sx.toULong()
-						p.sector['y'] = sx.toULong()
+						activity.px = px
+						activity.py= py
+						activity.sx = sx
+						activity.sy = sx
 						r.text = "${e.text} visited: [$sx][$sy] $px - $py "
 						//activity.finish()
 					}

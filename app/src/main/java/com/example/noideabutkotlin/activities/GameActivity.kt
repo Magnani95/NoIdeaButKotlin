@@ -123,14 +123,12 @@ class GameActivity() : AppCompatActivity() {
 				}
 			}
 		} else if(requestCode==2 && resultCode == RESULT_OK){
-			var s = data?.getParcelableExtra<Ship>("ship")
-			/*Log.d("COORD", "onActivityResult: OLD [${ship.position.sector['x']}][${ship.position.sector['y']}] ${ship.position.coordinates['x']} - ${ship.position.coordinates['y']}")
-			Log.d("COORD", "onActivityResult: NEW [${s!!.position.sector['x']!!}][${s.position.sector['y']!!}] ${s.position.coordinates['x']} - ${s.position.coordinates['y']}")
-			ship.position.coordinates['x'] = s!!.position.coordinates['x']!!
-			ship.position.coordinates['y'] = s.position.coordinates['y']!!
-			ship.position.sector['x'] = s.position.sector['x']!!
-			ship.position.sector['y'] = s.position.sector['y']!!
-			 */
+			var p = ship.position
+			p.coordinates['x'] = data!!.getStringExtra("px")!!.toULong()
+			p.coordinates['y'] = data!!.getStringExtra("py")!!.toULong()
+			p.sector['x'] = data!!.getStringExtra("sx")!!.toULong()
+			p.sector['y'] = data!!.getStringExtra("sy")!!.toULong()
+
 		}
 	}
 }
