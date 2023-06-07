@@ -184,6 +184,11 @@ class GameListener(var activity: GameActivity) : View.OnClickListener, AppCompat
 
 				var intent : Intent = Intent(activity, FirebaseActivity::class.java)
 				intent.putExtra("ship", activity.ship)
+				intent.putExtra("px", activity.ship.position.coordinates['x'].toString())
+				intent.putExtra("py", activity.ship.position.coordinates['y'].toString())
+				intent.putExtra("sx", activity.ship.position.sector['x'].toString())
+				intent.putExtra("sy", activity.ship.position.sector['y'].toString())
+
 				activity.startActivityForResult(intent, 2)
 
 			}else{

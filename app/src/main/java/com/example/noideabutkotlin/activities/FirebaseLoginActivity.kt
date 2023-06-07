@@ -45,10 +45,21 @@ class FirebaseActivity : AppCompatActivity() {
 	val auth : FirebaseAuth = FirebaseAuth.getInstance()
 	val listener = FirebaseListener(this)
 	lateinit var ship : Ship
+	lateinit var px : String
+	lateinit var py : String
+	lateinit var sx : String
+	lateinit var sy : String
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.firebase_login_activity)
 		ship = intent.getParcelableExtra<Ship>("ship")!!
+		px = intent.getStringExtra("px")!!
+		py = intent.getStringExtra("py")!!
+		sx = intent.getStringExtra("sx")!!
+		sy = intent.getStringExtra("sy")!!
+		Log.d("COORD", "onCreate: [${sx}][${sy} ${px} - ${py}]")
+
 	}
 	override fun onResume() {
 		super.onResume()
@@ -107,13 +118,21 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 			Log.d("MAGNANI0", "savings... ")
 			var v = ContentValues()
 			var p = activity.ship.position
+			/*
 			v.put(ContentShip.USER, e.toString())
 			v.put(ContentShip.POSITIONX, p.coordinates['x'].toString())
 			v.put(ContentShip.POSITIONY, p.coordinates['y'].toString())
 			v.put(ContentShip.SECTORX, p.sector['x'].toString())
 			v.put(ContentShip.SECTORY, p.sector['y'].toString())
+			 */
+			v.put(ContentShip.USER, e.toString())
+			v.put(ContentShip.POSITIONX, activity.px)
+			v.put(ContentShip.POSITIONY, activity.py)
+			v.put(ContentShip.SECTORX, activity.sx)
+			v.put(ContentShip.SECTORY, activity.sy)
+
 			activity.contentResolver.insert(ContentShip.CONTENT_URI,v)
-			Log.d("MAGNANI0", "Data saved on disk [${p.sector['x'].toString()}][${p.sector['y'].toString()}] ${p.coordinates['x'].toString()} - ${p.coordinates['y'].toString()}")
+			r.text = "Data saved on disk [${activity.sx}][${activity.sy}] ${activity.px} - ${activity.py}"
 		}else if(v.toString().contains("app:id/loadButton")){
 			var projection : Array<String> = arrayOf(ContentShip.POSITIONX, ContentShip.POSITIONY, ContentShip.SECTORX, ContentShip.SECTORY)
 			var selectionClause = ContentShip.USER + "=?"
@@ -147,8 +166,6 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 			Log.d("MAGNANI", "onClick: Impossible branch")
 		}
 	}
-
-
 }
 
 
