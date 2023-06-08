@@ -61,7 +61,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 		Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
 
 		mTriangle.draw(vPMatrix)
-		//mTriangle.draw()
+		mTriangle.draw()
 	}
 
 	// vPMatrix is an abbreviation for "Model View Projection Matrix"
