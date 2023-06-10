@@ -11,6 +11,7 @@ import com.example.noideabutkotlin.generator.positionGenerator
 import com.example.noideabutkotlin.mandatory.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Semaphore
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
 
 
@@ -51,18 +52,11 @@ class Ship() : Parcelable{
 			l.unlock()
 			s.release()
 		}
+		//workerPool.shutdown()
+		//workerPool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS)
 		while (s.availablePermits() != 3){
 			Thread.sleep(10)
 		}
-
-	/*
-		Log.d("MAGNANI", "tick:engine module")
-		this.engineModule.tick(this)
-		Log.d("MAGNANI", "tick:energy module")
-		this.energyModule.tick(this)
-		Log.d("MAGNANI", "tick:position module")
-		this.position.tick(this)
-		 */
 
 	}
 

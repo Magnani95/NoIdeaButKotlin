@@ -6,6 +6,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -49,6 +50,7 @@ class FirebaseActivity : AppCompatActivity() {
 	lateinit var py : String
 	lateinit var sx : String
 	lateinit var sy : String
+	lateinit var b : Bundle
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -59,6 +61,26 @@ class FirebaseActivity : AppCompatActivity() {
 		sx = intent.getStringExtra("sx")!!
 		sy = intent.getStringExtra("sy")!!
 		Log.d("COORD", "onCreate: [${sx}][${sy} ${px} - ${py}]")
+
+		var e = findViewById<EditText>(R.id.email)
+		var p = findViewById<EditText>(R.id.password)
+		var r = findViewById<TextView>(R.id.result)
+
+		if (savedInstanceState != null) {
+			b = savedInstanceState
+		}else{
+			b = Bundle()
+		}
+
+		if (b.containsKey("user")){
+			e.setText(b.getString("user"))
+		}
+		if(b.containsKey("password")){
+			p.setText(b.getString("password"))
+		}
+		if (b.containsKey("result")){
+			r.text = b.getString("result")
+		}
 
 	}
 	override fun onResume() {
@@ -75,6 +97,17 @@ class FirebaseActivity : AppCompatActivity() {
 		load.setOnClickListener(listener)
 
 		listener.populate()
+	}
+
+	override fun onSaveInstanceState(outState: Bundle) {
+		super.onSaveInstanceState(outState)
+
+		var e = findViewById<EditText>(R.id.email)
+		var p = findViewById<EditText>(R.id.password)
+		var r = findViewById<TextView>(R.id.result)
+		outState.putString("user", e.text.toString())
+		outState.putString("password", p.text.toString())
+		outState.putString("result", r.text.toString())
 	}
 
 	override fun finish() {
