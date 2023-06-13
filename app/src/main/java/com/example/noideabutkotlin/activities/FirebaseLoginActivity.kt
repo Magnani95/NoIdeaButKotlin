@@ -167,7 +167,7 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 			Log.d("MAGNANI0", "savings... ")
 			var v = ContentValues()
 
-			v.put(ContentShip.USER, e.toString())
+			v.put(ContentShip.USER, e.text.toString())
 			v.put(ContentShip.POSITIONX, activity.px)
 			v.put(ContentShip.POSITIONY, activity.py)
 			v.put(ContentShip.SECTORX, activity.sx)
@@ -176,9 +176,9 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 			activity.contentResolver.insert(ContentShip.CONTENT_URI,v)
 			r.text = "Data saved on disk [${activity.sx}][${activity.sy}] ${activity.px} - ${activity.py}"
 		}else if(v.toString().contains("app:id/loadButton")){
-			var projection : Array<String> = arrayOf(ContentShip.POSITIONX, ContentShip.POSITIONY, ContentShip.SECTORX, ContentShip.SECTORY)
+			var projection : Array<String> = arrayOf(ContentShip.USER,ContentShip.POSITIONX, ContentShip.POSITIONY, ContentShip.SECTORX, ContentShip.SECTORY)
 			var selectionClause = ContentShip.USER + "=?"
-			var user : Array<String> = arrayOf(e.toString())
+			var user : Array<String> = arrayOf(e.text.toString())
 
 			var c = activity.contentResolver.query(ContentShip.CONTENT_URI,projection, selectionClause, user, null )
 
@@ -193,7 +193,9 @@ class FirebaseListener(var activity:FirebaseActivity) : View.OnClickListener{
 						var sx = c.getString(index)
 						index = c.getColumnIndex(ContentShip.SECTORY)
 						var sy = c.getString(index)
-						Log.d("MAGNANI", "load of ${e.text}: [$sx][$sy] $px - $py ")
+						index = c.getColumnIndex(ContentShip.USER)
+						var user = c.getString(index)
+						Log.d("MAGNANI", "load of ${user}: [$sx][$sy] $px - $py ")
 
 						val p = activity.ship.position
 						activity.px = px
